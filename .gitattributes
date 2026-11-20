@@ -1,0 +1,4 @@
+# LF everywhere (the scripts run in WSL and on Linux; CRLF breaks them)
+* text=auto eol=lf
+*.png binary
+*.ttf binary

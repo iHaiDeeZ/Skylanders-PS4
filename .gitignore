@@ -3,6 +3,7 @@
 # PC's outputs.
 /*
 !/.gitignore
+!/.gitattributes
 !/README.md
 !/LICENSE
 !/PLAN.md
