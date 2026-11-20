@@ -1,0 +1,66 @@
+GX write-gather FIFO: 1 registers, 83 functions
+    CC008000: 83 functions
+VI (video): 42 registers, 13 functions
+    CC002000: 1 functions
+    CC002002: 4 functions
+    CC002004: 1 functions
+    CC002006: 1 functions
+    CC002008: 1 functions
+    CC00200A: 1 functions
+DSP/ARAM: 13 registers, 19 functions
+    CC005000: 4 functions
+    CC005002: 1 functions
+    CC005004: 4 functions
+    CC005006: 3 functions
+    CC00500A: 8 functions
+    CC005012: 1 functions
+EXI: 7 registers, 11 functions
+    CD006800: 3 functions
+    CD00680C: 3 functions
+    CD006814: 3 functions
+    CD006820: 1 functions
+    CD006828: 8 functions
+    CD006834: 5 functions
+SI (serial): 12 registers, 9 functions
+    CD006420: 1 functions
+    CD006430: 3 functions
+    CD006434: 4 functions
+    CD006438: 6 functions
+    CD006480: 1 functions
+    CD006484: 1 functions
+PI (interrupts/FIFO): 4 registers, 9 functions
+    CC003000: 3 functions
+    CC003004: 3 functions
+    CC003018: 2 functions
+    CC003024: 2 functions
+MI (memory): 7 registers, 6 functions
+    CC004010: 2 functions
+    CC00401C: 1 functions
+    CC00401E: 2 functions
+    CC004020: 2 functions
+    CC004022: 1 functions
+    CC004024: 1 functions
+Hollywood (IPC, GPIO, timers) mirror: 6 registers, 3 functions
+    CD8000C0: 2 functions
+    CD8000C4: 2 functions
+    CD8000C8: 1 functions
+    CD800180: 1 functions
+    CD8001CC: 1 functions
+    CD8001D0: 1 functions
+AI (audio interface): 3 registers, 3 functions
+    CD006C00: 3 functions
+    CD006C04: 1 functions
+    CD006C0C: 1 functions
+Hollywood (IPC, GPIO, timers): 3 registers, 4 functions
+    CD000030: 2 functions
+    CD000034: 1 functions
+    CD0000C0: 1 functions
+other CC010000: 2 registers, 2 functions
+    CC010002: 2 functions
+    CC01022C: 1 functions
+DI (disc): 2 registers, 2 functions
+    CD006014: 1 functions
+    CD006024: 1 functions
+CP (command processor): 2 registers, 2 functions
+    CC000002: 1 functions
+    CC000018: 1 functions

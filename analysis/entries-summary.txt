@@ -1,0 +1,7 @@
+entries: 25518 (dtk 19324, data pointers 8344, lis/addi 7714, prologues 10419, jump table labels 2167)
+.text: reached 99.59% of bytes (3.7 KiB unreached, excluding 13.4 KiB zero padding)
+.text2: reached 85.15% of bytes (82.9 KiB unreached, excluding 26.6 KiB zero padding)
+problems: 1237 in 1237 entries, by source: {'lis': 1235, 'dtk': 1, 'bl-target': 1}
+dtk entries with problems: ['804D2598']
+possible pointer tables (kept): 1135
+entries after dropping false ones: 24261 (21 in data inside code)

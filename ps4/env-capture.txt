@@ -1,0 +1,11 @@
+# /data/SSA/env.txt for a diagnosis run (one VAR=value per line; delete the file for a normal run)
+# frame pictures: every 150th frame (XFB copy) with something drawn, as PNGs in /data/SSA/frames
+SSA_FRAMES=/data/SSA/frames
+SSA_FRAMES_EVERY=150
+SSA_GX_LOG=1
+# a recording of 4 frames from the first frame with a draw, for a replay on the PC (gx_replay)
+SSA_GXREC=/data/SSA/rec.gz
+SSA_GXREC_DRAWS=1
+SSA_GXREC_FRAMES=4
+# the 1 kHz sampler on the game thread: /data/SSA/samples.log
+SSA_PROFILE=1

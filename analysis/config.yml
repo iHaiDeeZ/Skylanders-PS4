@@ -1,0 +1,5 @@
+object: orig/main.dol
+hash: 161858104eed2fd9e9f76cd692e99ebc7c7fdca8
+symbols: config/symbols.txt
+splits: config/splits.txt
+write_asm: true

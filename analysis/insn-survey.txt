@@ -1,0 +1,47 @@
+reached instructions: 1183033
+  lwarx/stwcx.: 5640
+  lmw/stmw: 5236
+  mftb: 524
+  mfmsr/mtmsr/mtsr/mfsr (supervisor): 275
+  sync: 24
+  twi (trap): 19
+  sc (syscall): 10
+  dcbz: 7
+  dcbst: 4
+  dcbf: 3
+  dcbt: 2
+  icbi: 2
+  dcbi: 2
+  dcbz_l (locked cache): 1
+  tw (trap): 1
+  lis 0xE000/0xE001 (locked cache addresses): 12
+paired singles:
+  psq_l/st: 20934
+  psq_lx/stx (indexed): 7874
+  ps other xo10=528: 3261
+  ps arith xo5=29: 2222
+  ps arith xo5=20: 1769
+  ps arith xo5=25: 1684
+  ps arith xo5=12: 1514
+  ps arith xo5=21: 1057
+  ps arith xo5=23: 554
+  ps arith xo5=10: 547
+  ps other xo10=624: 457
+  ps other xo10=40: 387
+  ps other xo10=592: 381
+  ps arith xo5=28: 306
+  ps arith xo5=15: 303
+  ps arith xo5=14: 281
+  ps other xo10=72: 220
+  ps arith xo5=30: 87
+  ps other xo10=264: 72
+  ps other xo10=560: 67
+  ps arith xo5=24: 56
+  ps arith xo5=26: 6
+  ps arith xo5=13: 4
+  ps arith xo5=11: 3
+  ps arith xo5=18: 2
+  ps arith xo5=31: 2
+  ps other xo10=32: 1
+mfspr: LR=11551, HID2=9, HID0=6, SRR0=5, GQR1=5, GQR2=5, GQR3=5, GQR4=5, GQR5=5, GQR6=5, GQR7=5, SPRG3=4, CTR=4, XER=4, 19=3, 18=3, SPRG1=3, SPRG2=3, SRR1=2, 567=2, SPRG0=2, L2CR=2, HID1=1, PVR=1, 528=1, 529=1, 530=1, 531=1, 532=1, 533=1, 534=1, 535=1, 536=1, 537=1, 538=1, 539=1, 540=1, 541=1, 542=1, 543=1, 560=1, 561=1, 562=1, 563=1, 564=1, 565=1, 566=1, 25=1, DEC=1, IABR=1, 282=1, DABR=1, PMC1=1, PMC2=1, PMC3=1, PMC4=1, 955=1, MMCR0=1, MMCR1=1, 568=1, 569=1, ICTC=1, 570=1, UMMCR0=1, 937=1, 938=1, 939=1, 940=1, 941=1, 942=1, 571=1, 572=1, 573=1, 574=1, 575=1, 1011=1, GQR0=1, WPAR=1, DMAU=1, DMAL=1
+mtspr: CTR=12277, LR=11539, SRR1=14, SRR0=14, 568=10, 570=10, GQR5=9, 572=8, 574=8, GQR2=7, GQR3=7, GQR4=7, HID0=7, XER=6, 569=5, 560=5, 561=5, 571=5, 562=5, 563=5, 573=5, 564=5, 565=5, 575=5, 566=5, 567=5, GQR6=4, GQR7=4, HID2=4, IABR=3, DABR=3, SPRG3=3, GQR1=3, DMAU=3, DMAL=3, 528=3, 532=3, 536=3, 540=3, 19=3, 18=3, SPRG1=2, SPRG2=2, GQR0=2, PMC1=2, PMC2=2, PMC3=2, PMC4=2, MMCR0=2, MMCR1=2, L2CR=2, 529=2, 533=2, 537=2, 541=2, 542=2, 543=2, SPRG0=2, 1011=2, TBL(w)=1, TBU(w)=1, 955=1, ICTC=1, HID1=1, PVR=1, 530=1, 531=1, 534=1, 535=1, 538=1, 539=1, 25=1, 282=1, DEC=1, WPAR=1

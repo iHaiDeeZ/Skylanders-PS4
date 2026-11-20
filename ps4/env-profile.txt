@@ -1,0 +1,12 @@
+# /data/SSA/env.txt for a profiling run (delete the file for a normal run)
+# the 1 kHz sampler on the game thread: /data/SSA/samples.log
+SSA_PROFILE=1
+SSA_GX_LOG=1
+# (SSA_GX_THREAD=0: the renderer back on the game thread; SSA_GX_WORKERS=0: vertex fetch on the GX
+# thread; SSA_AUDIO=0: no sound; SSA_AOT_SYS=0: supervisor instructions leave translated code again,
+# as in v00.14; SSA_AOT_GP=0: GX FIFO writes through the runtime's calls again, as before v00.17;
+# SSA_VK_DUALSRC=0: the destination alpha constant only on draws that don't blend, as before v00.17;
+# SSA_REVERB_NATIVE=0: the AXFX reverb as translated code again, SSA_FIFO_BATCH=0: each GX FIFO burst
+# handed on at once, SSA_AOT=/data/SSA/ssa15.aot: v00.20/21's translated code, as before v00.22
+# (ssa9.aot: v00.19's, ssa8.aot: v00.17/18's);
+# SSA_VK_SCALE=n: the internal resolution, replacing the quick menu's setting)

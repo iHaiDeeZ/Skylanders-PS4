@@ -1,0 +1,29 @@
+# Only the port's own files. The game stays out: disc images, the extracted disc, the translated code
+# (*.aot) and packages with the game inside, figures and saves - and so do logs, recordings and the
+# PC's outputs.
+/*
+!/.gitignore
+!/README.md
+!/LICENSE
+!/PLAN.md
+!/analysis/
+!/docs/
+!/ps4/
+!/recomp/
+!/scripts/
+!/tools/
+__pycache__/
+*.pyc
+*.aot
+*.pkg
+*.rvz
+*.iso
+*.wbfs
+*.gcm
+*.dol
+*.bin
+*.sky
+*.log
+*.gxr
+*.gz
+*.wav
