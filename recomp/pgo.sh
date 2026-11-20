@@ -13,10 +13,16 @@
 #    (code the run didn't reach compiled for speed as before, not for size); AOT_LDFLAGS as given
 #    (e.g. -Wl,-z,keep-text-section-prefix)
 # The run covers boot, menus and the village: the profile is that. The generated code stays local.
+# SSA_PGO_DISC: your extracted disc (sys/main.dol in it; default the repository's disc/DATA); the
+# NAND: the repository's nand/ when there is one, else a new one (tools/make-nand.py). The run needs
+# a Vulkan driver on the PC (Mesa's lavapipe: Ubuntu's mesa-vulkan-drivers).
 set -euo pipefail
 DIR=$1; OUT=$2; SECS=${3:-400}
 X="$(cd "$(dirname "$0")" && pwd)"
+DISC="${SSA_PGO_DISC:-$X/../disc/DATA}"
+[ -f "$DISC/sys/main.dol" ] || { echo "no $DISC/sys/main.dol: SSA_PGO_DISC=<your extracted disc>"; exit 1; }
 P1=~/ssa-build/p1
+mkdir -p $P1
 cd $P1
 base=$(basename "$DIR")
 GEN=$P1/$base-gen.aot
@@ -28,13 +34,13 @@ from=$(( caddr - eaddr ))
 echo "== 2. the run ($SECS s), counters $csize bytes at entry + $from"
 tag=pgo-$base
 rm -rf $P1/nand-$tag $P1/frames-$tag $P1/figures-$tag
-cp -r "$X/../nand" $P1/nand-$tag
+if [ -d "$X/../nand" ]; then cp -r "$X/../nand" $P1/nand-$tag; else python3 "$X/../tools/make-nand.py" $P1/nand-$tag > /dev/null; fi
 mkdir -p $P1/frames-$tag $P1/figures-$tag
 cp $P1/figures/spyro.sky $P1/figures-$tag/ 2>/dev/null || true
 P=70:A,75:A,85:A,100:A,120:A,140:A,160:A,180:A
 for t in $(seq 200 10 $((SECS - 20))); do P=$P,$t:A; done
-SSA_RUN=1 SSA_NAND=$P1/nand-$tag SSA_DOL=$HOME/ssa-build/dtk/orig/main.dol SSA_AOT=$GEN \
-  SSA_DISC="$X/../disc/DATA" SSA_SECONDS=$SECS SSA_GX_LOG=1 SSA_PRESS=$P SSA_PORTAL=figures-$tag/spyro.sky=16 \
+SSA_RUN=1 SSA_NAND=$P1/nand-$tag SSA_DOL="$DISC/sys/main.dol" SSA_AOT=$GEN \
+  SSA_DISC="$DISC" SSA_SECONDS=$SECS SSA_GX_LOG=1 SSA_PRESS=$P SSA_PORTAL=figures-$tag/spyro.sky=16 \
   SSA_GX_THREAD=1 SSA_GX_WORKERS=3 SSA_AOT_GP=1 SSA_AOT_DUMP=$P1/$tag.cnts,$from,$csize \
   ~/ssa-build/jittest/jittest > run-$tag.log 2>&1 || true
 grep -a -E "stopped after|SSA_AOT_DUMP|^ssa: signal" run-$tag.log | head -3

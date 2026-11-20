@@ -2,3 +2,5 @@
 * text=auto eol=lf
 *.png binary
 *.ttf binary
+# (patches byte for byte: a CRLF line in one is a CRLF line in the source it changes)
+*.patch -text

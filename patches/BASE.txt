@@ -1,0 +1,5 @@
+crema-ssa.patch applies to upstream Cemu (https://github.com/cemu-project/Cemu) at
+cc6fea125a5d4f559c662d13c5f4af0b6dd0876f (2026-10-04, "PPCRec: Lower optimized single-precision stores to SINGLE_FTZ"),
+with its submodules dependencies/Vulkan-Headers, dependencies/ZArchive and dependencies/imgui at that commit's pins.
+The result is the Skylanders copy of Crema (Crema's PS4 work, its C++ backend BackendC and the AOT loader,
+and recomp/patch-crema-wii.py + recomp/patch-aot-*.py already applied): scripts/setup-crema.sh.

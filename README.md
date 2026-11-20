@@ -80,10 +80,6 @@ contain the game, so never share them.
 dumped on your Wii (for example with CleanRip), and a PC with **WSL 2** to make the translated code.
 No real Portal of Power is needed.
 
-> **Note:** the translated code is made with the Skylanders copy of Crema's recompiler and its C++
-> backend (BackendC), which is part of Crema's development work and **isn't published yet**. Until it
-> is, the translated code can't be made from public sources: see [Building](#building).
-
 1. Extract the disc image's data partition with Dolphin's `dolphin-tool`:
 
    ```bash
@@ -93,7 +89,11 @@ No real Portal of Power is needed.
    You get `sys/` (with `main.dol`), `files/` and a few small files: about 4 GB. Its `sys/main.dol` must
    have SHA-1 `161858104eed2fd9e9f76cd692e99ebc7c7fdca8`.
 
-2. Make the translated code, `ssa16.aot`, on the PC ([Building](#building)).
+2. Make the translated code, `ssa16.aot`, on the PC ([Building](#building), steps 1 to 4):
+
+   ```bash
+   scripts/build-aot.sh ~/ssa-disc ssa16.aot pgo
+   ```
 
 3. Copy the folder to the console as **`/data/SSA/disc`** and the translated code as
    **`/data/SSA/ssa16.aot`**, over FTP.
@@ -211,19 +211,51 @@ Copy both to keep them.
 
 ## Building
 
-On a PC with WSL 2 (Ubuntu) and clang/LLVM 21; [`PLAN.md`](PLAN.md) has every step in detail.
+**You need:** a PC with **WSL 2** (Ubuntu), clang/LLVM 21 (`clang-21`, `lld-21`, `llvm-21`), Python 3,
+and Ubuntu's `libvulkan-dev`, `glslang-tools`, `mesa-vulkan-drivers` and `zlib1g-dev`. Everything
+below runs in WSL; [`PLAN.md`](PLAN.md) explains each part in detail.
 
-- **The translated code:** the Skylanders copy of Crema's source (not published yet, see the note in
-  [Getting started](#getting-started)) gets `recomp/patch-crema-wii.py` and the `recomp/patch-aot-*.py`
-  scripts. `recomp/build.sh` builds the PC harness, `tools/dol2bin.py` turns your `main.dol` into its
-  code image, and the harness translates the functions in `analysis/entries-aot.txt`
-  (`JT_AOT_OUT=dir JT_AOT_KEEP=8034f280-8034f3b0 JT_AOT_EXPAND=8034f280-8034f3b0`). Then
-  `recomp/patch-aot-hw.py select` and `recomp/patch-aot-mfcr.py` post-process the C++, and
-  `recomp/aotbuild.sh` (or `recomp/pgo.sh`, profile-guided) compiles it into the `.aot` file.
-- **The app:** `ps4/build.sh` builds `out/Skylanders-SSA-vXX.YY.pkg` with
-  [ps4-kit](https://github.com/iHaiDeeZ/ps4-kit) and the OpenOrbis toolchain, from the same Crema copy.
-- **Tests on the PC:** the harness runs the whole game with `SSA_RUN=1` and compares every translated
-  function against the JIT (`JT_AOT_REAL`).
+1. **Crema's source.** The game's code is translated by [Crema](https://github.com/iHaiDeeZ/Crema)'s
+   PowerPC recompiler with its C++ backend. This makes the copy this port uses: upstream Cemu at the
+   commit in [`patches/BASE.txt`](patches/BASE.txt), with
+   [`patches/crema-ssa.patch`](patches/crema-ssa.patch) applied (Crema's PS4 work, the backend, the
+   translated-code loader, and this port's `recomp/patch-*.py` scripts already in it):
+
+   ```bash
+   scripts/setup-crema.sh                # into ~/ssa-build/crema
+   ```
+
+2. **Headers.** Cemu's code includes **Boost 1.89**, **glm** and **fmt 12.1**, all header-only here: put
+   their `boost/`, `glm/` and `fmt/` header folders in one folder and point `CREMA_DEPS_INCLUDE` at it.
+
+3. **The PC harness**, which translates the game, runs it on the PC (`SSA_RUN=1`) and checks every
+   translated function against the JIT (`JT_AOT_REAL`):
+
+   ```bash
+   export CREMA_DEPS_INCLUDE=~/crema-deps VKDEPS=/usr
+   recomp/build.sh objects && recomp/build.sh link    # ~/ssa-build/jittest/jittest
+   ```
+
+4. **The translated code** from your extracted disc. `pgo` makes the profile-guided build of the
+   releases: the game runs for 400 s on the PC first. Without it you get a plain build, sooner and
+   about 15% slower:
+
+   ```bash
+   scripts/build-aot.sh ~/ssa-disc ssa16.aot pgo
+   ```
+
+   It translates the 26,214 functions in `analysis/entries-aot.txt` the way the releases' code was
+   made, so the C++ comes out the same as theirs.
+
+5. **The app**, with [ps4-kit](https://github.com/iHaiDeeZ/ps4-kit) and the OpenOrbis toolchain set up
+   as ps4-kit's README says (`CREMA_SRC` / `CREMA_DEPS_INCLUDE` if your copies are elsewhere):
+
+   ```bash
+   SSA_VERSION=00.23 ps4/build.sh                    # out/Skylanders-SSA-v00.23.pkg
+   ```
+
+   With `SSA_PKG_FULL=dir` (a folder with `disc/`, `ssa16.aot` and, optionally, `seed/` holding
+   `nand/`, `figures/spyro.sky` and `settings.ini` for the first start) you get the one-file package.
 
 ## Thanks
 
@@ -242,8 +274,9 @@ On a PC with WSL 2 (Ubuntu) and clang/LLVM 21; [`PLAN.md`](PLAN.md) has every st
 ## License and disclaimer
 
 The code in this repository is released under the **GNU General Public License v2.0 or later**
-([LICENSE](LICENSE)), as most of the runtime is ported from Dolphin's GPL code. The Nunito font is
-under the SIL Open Font License.
+([LICENSE](LICENSE)), as most of the runtime is ported from Dolphin's GPL code.
+[`patches/crema-ssa.patch`](patches/crema-ssa.patch) changes Cemu's source and stays under Cemu's
+license, the **Mozilla Public License 2.0**. The Nunito font is under the SIL Open Font License.
 
 This project isn't affiliated with or endorsed by Activision, Toys for Bob, Nintendo or Sony.
 *Skylanders* and *Spyro* are trademarks of their owners. No game files are included: play games you

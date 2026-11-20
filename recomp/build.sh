@@ -4,9 +4,12 @@
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
 SRC=${JT_SRC:-$HOME/ssa-build/crema/src}
+# (JT_SRC: the Skylanders copy of Crema's source, scripts/setup-crema.sh; CREMA_DEPS_INCLUDE: a folder
+# with the Boost 1.89, glm and fmt 12.1 headers Cemu's code includes, all used header-only; VKDEPS: the
+# Vulkan headers and loader and glslangValidator, /usr with Ubuntu's libvulkan-dev + glslang-tools)
 OUT=${JT_OUT:-$HOME/ssa-build/jittest}
 mkdir -p $OUT
-CXX="clang++-21 -std=c++20 -O1 -g -fno-strict-aliasing -D__ORBIS__ -DJITTEST -DBOOST_NOWIDE_NO_LIB -DENABLE_VULKAN -DVK_NO_PROTOTYPES -DEMULATOR_HASH=0 -DEMULATOR_VERSION_MAJOR=0 -DEMULATOR_VERSION_MINOR=0 -DEMULATOR_VERSION_PATCH=0 -I$SRC -I$SRC/Cafe -I$SRC/../dependencies/Vulkan-Headers/include -I$SRC/gui/interface -I$SRC/../dependencies/ZArchive/include -I$SRC/../dependencies/imgui -include Common/precompiled.h -idirafter $HOME/cemups4-build/sysroot/include -Wno-everything -mavx -mmovbe -msse4.1"
+CXX="clang++-21 -std=c++20 -O1 -g -fno-strict-aliasing -D__ORBIS__ -DJITTEST -DBOOST_NOWIDE_NO_LIB -DENABLE_VULKAN -DVK_NO_PROTOTYPES -DEMULATOR_HASH=0 -DEMULATOR_VERSION_MAJOR=0 -DEMULATOR_VERSION_MINOR=0 -DEMULATOR_VERSION_PATCH=0 -I$SRC -I$SRC/Cafe -I$SRC/../dependencies/Vulkan-Headers/include -I$SRC/gui/interface -I$SRC/../dependencies/ZArchive/include -I$SRC/../dependencies/imgui -include Common/precompiled.h -idirafter ${CREMA_DEPS_INCLUDE:-$HOME/cemups4-build/sysroot/include} -Wno-everything -mavx -mmovbe -msse4.1"
 FILES="
 Cafe/HW/Espresso/Recompiler/PPCRecompiler.cpp
 Cafe/HW/Espresso/Recompiler/PPCRecompilerImlGen.cpp

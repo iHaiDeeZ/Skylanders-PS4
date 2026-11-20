@@ -988,9 +988,16 @@ Console runs (2026-11-16, .90):
   - Public release (2026-11-20): github.com/iHaiDeeZ/Skylanders-PS4, release v00.23 with the app-only
     package (Skylanders-SSA-v00.23.pkg, 29 MB: no disc, translated code or saves). The repository is
     this folder (an allow-list .gitignore: README, LICENSE, PLAN.md, analysis/, docs/, ps4/, recomp/,
-    scripts/, tools/; LF line endings); GPL-2.0-or-later (the Dolphin ports). Not public yet: the
-    Skylanders copy of Crema's source (BackendC, the AOT loader), so the translated code and the app
-    can't be built from public sources - the README says so.
+    scripts/, tools/; LF line endings); GPL-2.0-or-later (the Dolphin ports).
+  - The Crema copy published (2026-11-20, user: "Publish it"): patches/crema-ssa.patch (264 files,
+    1.75 MB, MPL-2.0 as Cemu) = upstream Cemu cc6fea12's src/ -> ~/ssa-build/crema/src (Crema's PS4
+    work from 2026-11-14, BackendC, the AOT loader, recomp/patch-*.py applied); dependencies are
+    upstream's own submodule pins (Vulkan-Headers, ZArchive, imgui). scripts/setup-crema.sh clones
+    and patches it (checked with a real clone: identical tree, 57 s); scripts/build-aot.sh makes the
+    translated code from a disc (checked: C++ identical to aot16, 118 s plain); the app built from
+    the cloned tree (CREMA_SRC). Headers: Boost 1.89, glm, fmt 12.1, header-only
+    (CREMA_DEPS_INCLUDE; default ~/cemups4-build/sysroot/include here). pgo.sh: SSA_PGO_DISC, DOL
+    from the disc, a new NAND (make-nand.py) when the repository has none.
 - The next wall: hardware accesses cost ~38 us on the PS4 against a few on the PC. Every GX
   gather-pipe write (0xCC008000) is one, so drawing will be slow until FIFO writes stop faulting
   (backpatch the faulting host instruction into a call, or translate stores to 0xCC008000 as calls).

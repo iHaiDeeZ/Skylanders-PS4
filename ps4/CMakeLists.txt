@@ -10,7 +10,20 @@ include($ENV{HOME}/ps4-kit/ps4-kit.cmake)
 string(REPLACE " --wrap=malloc_usable_size" "" CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 
 set(SSA_VERSION "00.00" CACHE STRING "Version shown in the log")
-set(CREMA_SRC "$ENV{HOME}/ssa-build/crema/src" CACHE PATH "the Skylanders copy of Crema's source (recomp/patch-crema-wii.py)")
+# (the Skylanders copy of Crema's source, scripts/setup-crema.sh; CREMA_SRC in the environment chooses
+# another; CREMA_DEPS_INCLUDE: the Boost 1.89, glm and fmt 12.1 headers Cemu's code includes)
+if(DEFINED ENV{CREMA_SRC})
+    set(CREMA_SRC_DEFAULT "$ENV{CREMA_SRC}")
+else()
+    set(CREMA_SRC_DEFAULT "$ENV{HOME}/ssa-build/crema/src")
+endif()
+if(DEFINED ENV{CREMA_DEPS_INCLUDE})
+    set(CREMA_DEPS_DEFAULT "$ENV{CREMA_DEPS_INCLUDE}")
+else()
+    set(CREMA_DEPS_DEFAULT "$ENV{HOME}/cemups4-build/sysroot/include")
+endif()
+set(CREMA_SRC "${CREMA_SRC_DEFAULT}" CACHE PATH "the Skylanders copy of Crema's source (scripts/setup-crema.sh)")
+set(CREMA_DEPS_INCLUDE "${CREMA_DEPS_DEFAULT}" CACHE PATH "Boost, glm and fmt headers for Cemu's code")
 set(RECOMP ${CMAKE_CURRENT_SOURCE_DIR}/../recomp)
 
 # Crema: the recompiler (its glue and the translated-code loader), the interpreter, PS4 memory mapping
@@ -79,7 +92,7 @@ target_include_directories(ssa_crema PRIVATE ${CREMA_SRC} ${CREMA_SRC}/Cafe ${CR
     ${CREMA_SRC}/gui/interface ${CREMA_SRC}/../dependencies/ZArchive/include ${CREMA_SRC}/../dependencies/imgui ${RECOMP}
     ${PS4_KIT_DIR}/runtime)
 target_compile_options(ssa_crema PRIVATE -O2 -g -fno-strict-aliasing -include Common/precompiled.h
-    -idirafter $ENV{HOME}/cemups4-build/sysroot/include -Wno-everything)
+    -idirafter ${CREMA_DEPS_INCLUDE} -Wno-everything)
 
 # (the quick menu: overlay, settings, the binding layer, Dear ImGui - Crema's copy, 1.89.5)
 set(IMGUI_DIR ${CREMA_SRC}/../dependencies/imgui)
