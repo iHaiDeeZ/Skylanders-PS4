@@ -985,6 +985,12 @@ Console runs (2026-11-16, .90):
       dir = ~/ssa-build/pkg-full: the disc from XX/disc/DATA, ssa16.aot = ssa16p.aot, seed/ = .90's
       /data/SSA nand (SYSCONF, setting.txt, the four save slots), figure and settings as of today.
       The game's own data: for the user's consoles only, never published.
+  - Public release (2026-11-20): github.com/iHaiDeeZ/Skylanders-PS4, release v00.23 with the app-only
+    package (Skylanders-SSA-v00.23.pkg, 29 MB: no disc, translated code or saves). The repository is
+    this folder (an allow-list .gitignore: README, LICENSE, PLAN.md, analysis/, docs/, ps4/, recomp/,
+    scripts/, tools/; LF line endings); GPL-2.0-or-later (the Dolphin ports). Not public yet: the
+    Skylanders copy of Crema's source (BackendC, the AOT loader), so the translated code and the app
+    can't be built from public sources - the README says so.
 - The next wall: hardware accesses cost ~38 us on the PS4 against a few on the PC. Every GX
   gather-pipe write (0xCC008000) is one, so drawing will be slow until FIFO writes stop faulting
   (backpatch the faulting host instruction into a call, or translate stores to 0xCC008000 as calls).
